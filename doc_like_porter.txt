@@ -1,0 +1,26 @@
+
+user => user login signup crud
+
+
+user using porter step:- 
+                        1 select veihcle type like - bike , van, truck
+                        2 open map select poin A for pickup order and point B for drop order
+                        3 
+
+
+
+
+                        porter user side steps :- 
+                        open app
+                        open location popup
+                        login signup with phone no. 
+                        if select signup verify otp then > complete user profile then > open map 
+                        else > open map 
+                        select point A and select point B then > confirm location
+                        open drop location contect no. or use my contect no. 
+                        open vehicle type list witg pricing like - bike , van, truck
+                        select vehicle type then > open select-your-good-type list like- electricle, textile, medicine
+                        after select goods-type searching driver > then automatic select driver- near by user pickup location 
+                        then after asign driver contect detaile show on user display 
+
+SELECT id,product.vendor_id AS vendor_id,name,seo_tag,brand,category,(SELECT GROUP_CONCAT(category_name) from category WHERE FIND_IN_SET(id,product.category) )AS category_name,is_deleted,status,review,rating,description,care_and_Instructions,benefits,is_active,created_by,created_by_id,created_on,updated_on,product_verient_id,product_id,verient_name,quantity,unit,product_stock_quantity,price,mrp,gst,sgst,cgst,verient_is_deleted,verient_status,discount,verient_description,verient_is_active,verient_created_on,verient_updated_on,product_height,product_width,product_Weight,(SELECT GROUP_CONCAT(product_image_path) FROM product_images WHERE product_images.product_verient_id = product_verient.product_verient_id) AS all_images_url,(SELECT GROUP_CONCAT(product_image_path) FROM product_images WHERE product_images.product_verient_id = product_verient.product_verient_id AND image_position = "cover" GROUP BY product_images.product_verient_id) AS cover_image,(SELECT ROUND(AVG(review.review_rating),1) FROM review WHERE review.product_id = product.id) AS avgRatings FROM product left join product_verient ON product.id = product_verient.product_id WHERE product.vendor_id = "3" AND (product_verient.verient_is_deleted IS NULL OR product_verient.verient_is_deleted = 0 ) AND is_deleted = 0  AND (name LIKE "%ayu%" OR verient_name LIKE "%ayu%" OR category_name LIKE "%ayu%" OR seo_tag LIKE "%ayu%")   ORDER BY product.created_on DESC  LIMIT 0,1000'
