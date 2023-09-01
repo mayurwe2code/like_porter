@@ -29,7 +29,7 @@ var connection = mysql.createConnection({
   host: 'mysql.indiakinursery.com',
   user: 'indiakinursery',
   password: "WE2code@2023",
-  database: "indiakinursery",
+  database: "like_porter",
   waitForConnections: true,
   connectionLimit: 10,
   maxIdle: 10,

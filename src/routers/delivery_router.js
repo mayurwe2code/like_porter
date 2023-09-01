@@ -2,7 +2,7 @@
 import express from "express";
 import { driver_auth, admin_auth, fetch_user, fetch_admin_driver } from "../../middleware/auth.js"
 import {
-    sign_by_driver, driver_otp_verify, driver_login, driver_forgate_password, driver_forgate_password_update, set_driver_notification_token, driver_details, delete_restore_driver, update_driver, add_working_area, chouse_driver_for_delivery, register_your_vehicle, order_asign, get_delivery_detaile_list, delivery_area_list, active_deactive_area, change_order_detaile_status, delivery_verify_code_match, driver_add_by_admin, vehicle_asign_by_admin, driver_list, order_details_for_driver, vehicle_list, only_driver_list, update_your_vehicle, change_vehicle_feild, order_asign_by_delivery_admin
+    sign_by_driver, driver_otp_verify, driver_login, driver_forgate_password, driver_forgate_password_update, set_driver_notification_token, driver_details, delete_restore_driver, update_driver, add_working_area, chouse_driver_for_delivery, register_your_vehicle, add_order_by_user, get_delivery_detaile_list, delivery_area_list, active_deactive_area, change_order_detaile_status, delivery_verify_code_match, driver_add_by_admin, vehicle_asign_by_admin, driver_list, order_details_for_driver, vehicle_list, only_driver_list, update_your_vehicle, change_vehicle_feild, order_asign_by_delivery_admin
 } from "../controllers/delivery_controller.js";
 import multer from "multer"
 
@@ -54,7 +54,6 @@ delivery_router.post("/add_working_area", fetch_admin_driver, add_working_area);
 delivery_router.post("/chouse_driver_for_delivery", fetch_admin_driver, chouse_driver_for_delivery);
 delivery_router.post("/register_your_vehicle", fetch_admin_driver, upload.fields([{ name: 'puc_certificate', maxCount: 1 }, { name: 'insurance', maxCount: 1 }, { name: 'registration', maxCount: 1 }]), register_your_vehicle);
 delivery_router.post("/update_your_vehicle", fetch_admin_driver, upload.fields([{ name: 'puc_certificate', maxCount: 1 }, { name: 'insurance', maxCount: 1 }, { name: 'registration', maxCount: 1 }]), update_your_vehicle);
-delivery_router.post("/order_asign", admin_auth, order_asign);
 delivery_router.post("/get_delivery_detaile_list", fetch_admin_driver, get_delivery_detaile_list);
 delivery_router.post("/get_delivery_detaile_list_for_nursery_admin", admin_auth, get_delivery_detaile_list);
 delivery_router.get("/delivery_area_list", fetch_admin_driver, delivery_area_list);
@@ -64,6 +63,11 @@ delivery_router.post("/delivery_verify_code_match", driver_auth, delivery_verify
 delivery_router.put("/change_vehicle_feild", fetch_admin_driver, change_vehicle_feild);
 //deliver--------admin-----------
 delivery_router.post("/order_asign_by_delivery_admin", fetch_admin_driver, order_asign_by_delivery_admin);
+
+
+//user--order--api's
+delivery_router.post("/add_order_by_user", driver_auth, add_order_by_user);
+
 
 export default delivery_router;
 

@@ -225,7 +225,6 @@ function fetch_admin_driver(req, res, next) {
   if ('admin_token' in req.headers) {
     console.log("chek______________________________________________middleware___" + req.headers.admin_token)
     if (req.headers.admin_token != "" && req.headers.admin_token != undefined) {
-
       try {
         console.log("chek______________________________________admin_token_token________middleware___" + req.headers.admin_token)
         let token = jwt.verify(req.headers.admin_token, process.env.DRIVER_ADMIN_JWT_SECRET_KEY);
@@ -254,33 +253,6 @@ function fetch_admin_driver(req, res, next) {
     }
 
 
-  } else if ('user_token' in req.headers) {
-    try {
-      console.log("chek______________________________________________middleware___" + req.headers.user_token)
-      let token = jwt.verify(req.headers.user_token, process.env.USER_JWT_SECRET_KEY);
-      console.log(token)
-
-      if (req.headers.user_token != "" && req.headers.user_token != undefined) {
-        req.user_id = token.id
-        req.for_ = "user"
-        next()
-      } else {
-        res.send({ "error": "user token error" })
-      }
-
-    } catch (err) {
-      res.send({ "error": "user token error" })
-    }
-  } else if (req.headers.user_blank == "true") {
-    // search_product(req, res)
-    console.log("please add response...............")
-
-  } else if (req.headers.vendor_token != "" && req.headers.vendor_token != undefined) {
-    let token = jwt.verify(req.headers.vendor_token, process.env.VENDOR_JWT_SECRET_KEY);
-    console.log("token+++++++++-----------------------" + token.id)
-    console.log(token)
-    req.vendor_id = token.id
-    next()
   } else if (req.headers.driver_token != "" && req.headers.driver_token != undefined) {
     try {
       console.log("chek__________________________DRIVER_JWT_SECRET_KEY_____________middleware___" + req.headers.driver_token)
@@ -294,7 +266,7 @@ function fetch_admin_driver(req, res, next) {
       res.status(401).send(err)
     }
   } else {
-    res.send({ "error": "send only vendor, user, admin token" })
+    res.send({ "error": "send only driver, admin token" })
   }
 
 
