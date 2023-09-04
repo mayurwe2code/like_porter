@@ -511,7 +511,7 @@ export function chouse_driver_for_delivery(req, res) {
 }
 
 export function register_your_vehicle(req, res) {
-    let { company_name, model, color, registration_no_of_vehicle, chassis_number, vehicle_owner_name, puc_expiration_date, insurance_expiration_date, registration_expiration_date } = req.body
+    let { company_name, model, color, registration_no_of_vehicle, chassis_number, vehicle_owner_name, puc_expiration_date, insurance_expiration_date, registration_expiration_date, vehicle_type } = req.body
 
     // let puc_certificate = insurance = registration = null;
     let str_fields = "";
@@ -522,12 +522,12 @@ export function register_your_vehicle(req, res) {
     }
     let srt_user = ""
     if (req.headers.admin_token != "" && req.headers.admin_token != undefined) {
-        srt_user = "INSERT INTO `vehicle_detaile`(`vehicle_add_by`,`company_name`, `model`, `color`, `registration_no_of_vehicle`, `chassis_number`, `vehicle_owner_name`, `puc_expiration_date`, `insurance_expiration_date`, `registration_expiration_date`" + str_fields + ") VALUES('admin','" + company_name + "', '" + model + "', '" + color + "', '" + registration_no_of_vehicle + "', '" + chassis_number + "', '" + vehicle_owner_name + "','" + puc_expiration_date + "','" + insurance_expiration_date + "','" + registration_expiration_date + "'" + srt_values + ")"
+        srt_user = "INSERT INTO `vehicle_detaile`(`vehicle_add_by`,`company_name`, `model`, `color`, `registration_no_of_vehicle`, `chassis_number`, `vehicle_owner_name`, `puc_expiration_date`, `insurance_expiration_date`, `registration_expiration_date`,`vehicle_type`" + str_fields + ") VALUES('admin','" + company_name + "', '" + model + "', '" + color + "', '" + registration_no_of_vehicle + "', '" + chassis_number + "', '" + vehicle_owner_name + "','" + puc_expiration_date + "','" + insurance_expiration_date + "','" + registration_expiration_date + "','" + vehicle_type + "'" + srt_values + ")"
 
     } else if (req.headers.driver_token != "" && req.headers.driver_token != undefined) {
         connection.query("UPDATE `vehicle_detaile` SET `is_active` = '0' WHERE `vehicle_detaile`.`vehicle_id` = '" + req.driver_id + "'", (err, rows) => { });
 
-        srt_user = "INSERT INTO `vehicle_detaile`(`vehicle_add_by`,`driver_id`, `company_name`, `model`, `color`, `registration_no_of_vehicle`, `chassis_number`, `vehicle_owner_name`, `puc_expiration_date`, `insurance_expiration_date`, `registration_expiration_date`" + str_fields + ") VALUES( 'driver','" + req.driver_id + "', '" + company_name + "', '" + model + "', '" + color + "', '" + registration_no_of_vehicle + "', '" + chassis_number + "', '" + vehicle_owner_name + "','" + puc_expiration_date + "','" + insurance_expiration_date + "','" + registration_expiration_date + "'" + srt_values + ")"
+        srt_user = "INSERT INTO `vehicle_detaile`(`vehicle_add_by`,`driver_id`, `company_name`, `model`, `color`, `registration_no_of_vehicle`, `chassis_number`, `vehicle_owner_name`, `puc_expiration_date`, `insurance_expiration_date`, `registration_expiration_date`,`vehicle_type`" + str_fields + ") VALUES( 'driver','" + req.driver_id + "', '" + company_name + "', '" + model + "', '" + color + "', '" + registration_no_of_vehicle + "', '" + chassis_number + "', '" + vehicle_owner_name + "','" + puc_expiration_date + "','" + insurance_expiration_date + "','" + registration_expiration_date + "','" + vehicle_type + "'" + srt_values + ")"
 
     } else {
         srt_user = ""
@@ -552,15 +552,41 @@ export function register_your_vehicle(req, res) {
 
 
 export function add_order_by_user(req, res) {
-    let { order_id, payment, payment_method, order_delivery_confirm_code } = req.body
-    console.log({ order_id, payment, payment_method, order_delivery_confirm_code })
+    let { order_id, order_delivery_confirm_code, pickup_location_address, pickup_city, pickup_area_pin, pickup_location_contect, pickup_area_lat, pickup_area_long, given_pickup_time_by_user, drop_location_address, drop_city, drop_area_pin, drop_location_contect, drop_lat, drop_long } = req.body
 
-    connection.query("INSERT INTO `order_delivery_details`(`order_id`, `payment`,  `payment_method`, `order_delivery_confirm_code`,`order_ready_to_asign_for_delivery_by`) VALUES ('" + order_id + "','" + payment + "', '" + payment_method + "', '" + order_delivery_confirm_code + "' ,'" + req.created_by_id + "')", (err, rows) => {
+    order_id = Math.floor(100000 + Math.random() * 900000);
+    order_delivery_confirm_code = Math.floor(100000 + Math.random() * 900000);
+    connection.query("INSERT INTO `order_delivery_details`(`order_id`,`last_modification_by`, `last_modification_by_id`, `order_delivery_confirm_code`,`pickup_location_address`, `pickup_city`, `pickup_area_pin`, `pickup_location_contect`, `pickup_area_lat`, `pickup_area_long`, `given_pickup_time_by_user`, `drop_location_address`, `drop_city`, `drop_area_pin`, `drop_location_contect`, `drop_lat`, `drop_long`) VALUES ('" + order_id + "','user','" + req.user_id + "','" + order_delivery_confirm_code + "','" + pickup_location_address + "','" + pickup_city + "','" + pickup_area_pin + "','" + pickup_location_contect + "','" + pickup_area_lat + "','" + pickup_area_long + "','" + given_pickup_time_by_user + "','" + drop_location_address + "','" + drop_city + "','" + drop_area_pin + "','" + drop_location_contect + "','" + drop_lat + "','" + drop_long + "')", (err, rows) => {
         if (err) {
             console.log(err)
             res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "something went wrong", "status": false });
         } else {
-            res.status(StatusCodes.OK).json(rows);
+            connection.query("SELECT *, 6371 * ACOS( COS(RADIANS(" + pickup_area_lat + ")) * COS(RADIANS(current_latitude)) * COS(RADIANS(current_longitude ) - RADIANS(" + pickup_area_long + ")) + SIN(RADIANS(" + pickup_area_lat + ")) * SIN(RADIANS(current_latitude)) ) AS distance FROM driver_and_vehicle_view WHERE vehicle_is_active = '1' ORDER BY distance LIMIT 1", (err, rows) => {
+                if (err) {
+                    console.log(err)
+                    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "driver not available find some error", "status": false });
+                } else {
+                    if (rows.length) {
+                        let { driver_id, vehicle_id } = rows[0]
+                        console.log(driver_id)
+                        connection.query("UPDATE `order_delivery_details` SET `driver_id`='" + driver_id + "',`vehicle_id`='" + vehicle_id + "' WHERE 1", (err, rows) => {
+                            if (err) {
+                                console.log(err)
+                                res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "something went wrong", "status": false });
+                            } else {
+
+                                connection.query("INSERT INTO `order_status_given_by_driver`(`order_id`, `driver_id`) VALUES (" + order_id + "," + driver_id + ")", (err, rows) => { })
+
+                                res.status(200).json({ message: "Your order has been placed please wait for the driver to accept", "status": true, order_id });
+                            }
+                        }
+                        );
+                    } else {
+                        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "driver not available", "status": false })
+                    }
+                }
+            })
+
         }
     });
 
@@ -594,11 +620,12 @@ export function order_asign_by_delivery_admin(req, res) {
 }
 
 export function get_delivery_detaile_list(req, res) {
-    let filter = "SELECT orders_details_id,payment,order_status,payment_method,order_delivery_details.created_on AS order_asign_date, order_delivery_details.driver_id,driver_name,driver_last_name,date_of_birth,contect_no , order_delivery_details.order_id, order_date, product_id,shipping_charges, order_delivery_details.delivery_date,delivery_lat,delivery_log, user_name, address, `order`.email AS user_email,`order`.status_order AS status_order, pin_code, city, user_image, phone_no, total_order_product_quantity, order_delivery_details.vehicle_id,registration_no_of_vehicle,status_comment FROM `order_delivery_details` LEFT JOIN delivery_man ON order_delivery_details.driver_id = delivery_man.driver_id LEFT JOIN `order` ON order_delivery_details.order_id = `order`.order_id LEFT JOIN `vehicle_detaile` ON vehicle_detaile.vehicle_id = order_delivery_details.vehicle_id where"
+    let filter = "SELECT orders_details_id,order_id,order_delivery_details.driver_id,order_delivery_details.vehicle_id,order_asign_by,payment,order_status,last_modification_by,last_modification_by_id,status_comment,payment_method,order_delivery_confirm_code,created_on,updated_on,order_ready_to_asign_for_delivery_by,delivery_date,delivered_date,pickup_location_address,pickup_city,pickup_area_pin,pickup_location_contect,pickup_area_lat,pickup_area_long,given_pickup_time_by_user,given_pickup_time_by_driver,drop_location_address,drop_city,drop_area_pin,drop_location_contect,drop_lat,drop_long,given_drop_time_by_user,given_drop_time_by_driver,driver_name,driver_last_name,date_of_birth,current_address,gender,age,contect_no,email,password,status,contect_no_is_verified,aadhar_no,licence_no,licence_issue_date,licence_validity_date,delivery_man_is_active,driver_created_on,driver_updated_on,current_latitude,current_longitude,fcm_token,image,licence,aadhar_card,vehicle_add_by,company_name,model,color,registration_no_of_vehicle,chassis_number,vehicle_owner_name,make_of_vehicle,vehicle_created_on,vehicle_updated_on,vehicle_registerd_by,puc_expiration_date,insurance_expiration_date,registration_expiration_date,puc_certificate,insurance,registration,vehicle_is_active,vehicle_type FROM `order_delivery_details`,`driver_and_vehicle_view` WHERE order_delivery_details.driver_id = driver_and_vehicle_view.driver_id AND  "
     let req_obj = req.body
 
+
     if (req.body.date_from != "" && req.body.date_from != undefined && req.body.date_to != "" && req.body.date_to != undefined) {
-        filter += " order_delivery_details.delivery_date between '" + req.body.date_from + " 00:00:00' AND '" + req.body.date_to + " 23:59:59' AND  "
+        filter += " order_delivery_details.created_on between '" + req.body.date_from + " 00:00:00' AND '" + req.body.date_to + " 23:59:59' AND  "
     }
 
     for (let k in req_obj) {
