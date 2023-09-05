@@ -552,11 +552,13 @@ export function register_your_vehicle(req, res) {
 
 
 export function add_order_by_user(req, res) {
-    let { order_id, order_delivery_confirm_code, pickup_location_address, pickup_city, pickup_area_pin, pickup_location_contect, pickup_area_lat, pickup_area_long, given_pickup_time_by_user, drop_location_address, drop_city, drop_area_pin, drop_location_contect, drop_lat, drop_long } = req.body
+    let { order_id, order_delivery_confirm_code, pickup_location_address, pickup_city, pickup_area_pin, pickup_location_contect, pickup_area_lat, pickup_area_long, given_pickup_time_by_user, drop_location_address, drop_city, drop_area_pin, drop_location_contect, drop_lat, drop_long, pickup_order_confirm_code } = req.body
 
     order_id = Math.floor(100000 + Math.random() * 900000);
+    pickup_order_confirm_code = Math.floor(100000 + Math.random() * 900000);
     order_delivery_confirm_code = Math.floor(100000 + Math.random() * 900000);
-    connection.query("INSERT INTO `order_delivery_details`(`order_id`,`last_modification_by`, `last_modification_by_id`, `order_delivery_confirm_code`,`pickup_location_address`, `pickup_city`, `pickup_area_pin`, `pickup_location_contect`, `pickup_area_lat`, `pickup_area_long`, `given_pickup_time_by_user`, `drop_location_address`, `drop_city`, `drop_area_pin`, `drop_location_contect`, `drop_lat`, `drop_long`) VALUES ('" + order_id + "','user','" + req.user_id + "','" + order_delivery_confirm_code + "','" + pickup_location_address + "','" + pickup_city + "','" + pickup_area_pin + "','" + pickup_location_contect + "','" + pickup_area_lat + "','" + pickup_area_long + "','" + given_pickup_time_by_user + "','" + drop_location_address + "','" + drop_city + "','" + drop_area_pin + "','" + drop_location_contect + "','" + drop_lat + "','" + drop_long + "')", (err, rows) => {
+
+    connection.query("INSERT INTO `order_delivery_details`(`order_id`,`last_modification_by`, `last_modification_by_id`, `order_delivery_confirm_code`,`pickup_location_address`, `pickup_city`, `pickup_area_pin`, `pickup_location_contect`, `pickup_area_lat`, `pickup_area_long`, `given_pickup_time_by_user`, `drop_location_address`, `drop_city`, `drop_area_pin`, `drop_location_contect`, `drop_lat`, `drop_long`,`pickup_order_confirm_code`) VALUES ('" + order_id + "','user','" + req.user_id + "','" + order_delivery_confirm_code + "','" + pickup_location_address + "','" + pickup_city + "','" + pickup_area_pin + "','" + pickup_location_contect + "','" + pickup_area_lat + "','" + pickup_area_long + "','" + given_pickup_time_by_user + "','" + drop_location_address + "','" + drop_city + "','" + drop_area_pin + "','" + drop_location_contect + "','" + drop_lat + "','" + drop_long + "','" + pickup_order_confirm_code + "')", (err, rows) => {
         if (err) {
             console.log(err)
             res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "something went wrong", "status": false });
@@ -649,7 +651,7 @@ export function get_delivery_detaile_list(req, res) {
             console.log(err)
             res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "something went wrong", "status": false });
         } else {
-            res.status(StatusCodes.OK).json(rows);
+            res.status(StatusCodes.OK).json({ "status": true, rows });
         }
     }
     );
@@ -713,22 +715,18 @@ export function active_deactive_area(req, res) {
 export function change_order_detaile_status(req, res) {
     let { order_id, order_status, status_comment } = req.body
 
-    // if(admin_token!=""&& admin_token != undefined &&admin_token!=null){
 
-    // }else if(vendor_token!=""&& vendor_token != undefined &&vendor_token!=null){
-
-    // }else if(driver_token!=""&& driver_token != undefined &&driver_token!=null){
-
-    // }
     let query_ = ""
     if (req.headers.admin_token != "" && req.headers.admin_token != undefined && req.headers.admin_token != null) {
         query_ = "UPDATE `order_delivery_details` SET `order_status`='" + order_status + "', `last_modification_by`='admin', `last_modification_by_id`='" + req.admin_id + "'"
     }
     if (req.headers.driver_token != "" && req.headers.driver_token != undefined && req.headers.driver_token != null) {
         query_ = "UPDATE `order_delivery_details` SET `order_status`='" + req.body.order_status + "', `last_modification_by`='delivery_man', `last_modification_by_id`='" + req.driver_id + "',`status_comment`='" + req.body.status_comment + "'"
+        // driver_not_responsed rejected_by_driver
+
     }
-    console.log(query_ + " WHERE order_id='" + order_id + "' AND driver_id IS NULL")
-    connection.query(query_ + " WHERE order_id='" + order_id + "' AND driver_id IS NULL", (err, rows) => {
+    console.log(query_ + " WHERE order_id='" + order_id + "'")
+    connection.query(query_ + " WHERE order_id='" + order_id + "'", (err, rows) => {
         if (err) {
             console.log(err)
             res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "something went wrong", "status": false });
@@ -961,3 +959,71 @@ export function change_vehicle_feild(req, res) {
     );
 }
 
+export function reject_not_res_order(req, res) {
+    console.log("reject_not_res_order---------------------")
+    let { order_id, order_status, status_comment } = req.body
+    if ("rejected_by_driver" == req.body.order_status || "driver_not_responsed" == req.body.order_status) {
+
+        connection.query("SELECT * FROM `order_delivery_details` WHERE driver_id = '" + req.driver + "' AND order_id = " + order_id + "", (err, rows) => {
+            if (rows.length) {
+                let { pickup_area_lat, pickup_area_long } = rows[0]
+                connection.query("UPDATE `order_status_given_by_driver` SET `order_id`='" + order_id + "',`driver_id`='" + req.driver_id + "',`status`='" + req.body.order_status + "' WHERE 1", (err, rows) => {
+                    console.log(err)
+                    connection.query("SELECT *, 6371 * ACOS( COS(RADIANS(" + pickup_area_lat + ")) * COS(RADIANS(current_latitude)) * COS(RADIANS(current_longitude ) - RADIANS(" + pickup_area_long + ")) + SIN(RADIANS(" + pickup_area_lat + ")) * SIN(RADIANS(current_latitude)) ) AS distance FROM driver_and_vehicle_view WHERE vehicle_is_active = '1' AND driver_id != (SELECT driver_id FROM order_status_given_by_driver WHERE order_id = " + order_id + " AND status = 'rejected_by_driver' ) ORDER BY distance LIMIT 1", (err, rows) => {
+                        if (err) {
+                            console.log(err)
+                            // res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "driver not available find some error", "status": false });
+                        } else {
+                            if (rows.length) {
+                                let { driver_id, vehicle_id } = rows[0]
+                                console.log(driver_id)
+                                connection.query("UPDATE `order_delivery_details` SET `driver_id`='" + driver_id + "',`vehicle_id`='" + vehicle_id + "' WHERE 1", (err, rows) => {
+                                    if (err) {
+                                        console.log(err)
+                                        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "something went wrong", "status": false });
+                                    } else {
+
+                                        connection.query("INSERT INTO `order_status_given_by_driver`(`order_id`, `driver_id`, `status`) VALUES (" + order_id + "," + driver_id + ",'pandding')", (err, rows) => { })
+
+                                        res.status(200).json({ message: "order rejected successfull", "status": true, order_id });
+                                    }
+                                }
+                                );
+                            } else {
+                                res.status(200).json({ message: "order not rejected because driver not availabel", "status": false, order_id });
+                            }
+                        }
+                    })
+
+                })
+            } else {
+                res.status(200).send({ "status": false, "message": "order not available" })
+            }
+        })
+
+    }
+}
+
+export function pickup_and_drop_otp_verify(req, res) {
+    let { order_id, verify_otp, for_ } = req.body
+    connection.query("SELECT * FROM `order_delivery_details`  WHERE order_id = " + order_id + " AND driver_id = '" + req.driver_id + "'", (err, rows) => {
+        if (err) {
+            console.log(err)
+            res.status(200).send({ status: false, message: "find error" })
+        } else {
+            if (rows.length) {
+                if (for_ == "pickup_order") {
+
+                } else if (for_ == "drop_order") {
+
+                } else {
+
+                }
+
+            } else {
+                // res.status(200).staaaaaa
+
+            }
+        }
+    })
+}
