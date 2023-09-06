@@ -722,7 +722,6 @@ export function change_order_detaile_status(req, res) {
     if (req.headers.driver_token != "" && req.headers.driver_token != undefined && req.headers.driver_token != null) {
         query_ = "UPDATE `order_delivery_details` SET `order_status`='" + req.body.order_status + "', `last_modification_by`='delivery_man', `last_modification_by_id`='" + req.driver_id + "',`status_comment`='" + req.body.status_comment + "' WHERE order_id = '" + order_id + "' AND driver_id = '"+req.driver_id+"' AND (order_status = 'pickuped' OR order_status = 'failed_delivery_attempt' OR order_status = 'in_transit' OR order_status = 'rejected_by_driver')"
     }
-
     console.log(query_)
     connection.query(query_, (err, rows) => {
         if (err) {
