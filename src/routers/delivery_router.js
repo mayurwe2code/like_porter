@@ -64,14 +64,13 @@ delivery_router.put("/change_vehicle_feild", fetch_admin_driver, change_vehicle_
 //deliver--------admin-----------
 delivery_router.post("/order_asign_by_delivery_admin", fetch_admin_driver, order_asign_by_delivery_admin);
 
-
 //user--order--api's
 delivery_router.post("/add_order_by_user", auth_user, add_order_by_user);
 
 //delivery_driver_order_apis
 delivery_router.post("/get_delivery_detaile_list", fetch_admin_driver, get_delivery_detaile_list);
 delivery_router.put("/reject_not_res_order", fetch_admin_driver, reject_not_res_order);
-delivery_router.put("/pickup_and_drop_otp_verify", fetch_admin_driver, pickup_and_drop_otp_verify);
+delivery_router.post("/pickup_and_drop_otp_verify", driver_auth, pickup_and_drop_otp_verify);
 
 export default delivery_router;
 

@@ -1012,32 +1012,34 @@ export function pickup_and_drop_otp_verify(req, res) {
             res.status(200).send({ status: false, message: "find error" })
         } else {
             if (rows.length) {
-                let {pickup_order_confirm_code,order_delivery_confirm_code} = rows[0]
+                let { pickup_order_confirm_code, order_delivery_confirm_code } = rows[0]
+
+                console.log(for_ + "---" + pickup_order_confirm_code + "-----" + order_delivery_confirm_code)
                 if (for_ == "pickup_order") {
-                    if(pickup_order_confirm_code === verify_otp){
-                        connection.query("UPDATE `order_delivery_details` SET `order_status` = 'pickuped' , `last_modification_by`='driver' ,`last_modification_by_id`= '"+req.driver_id+"'  WHERE order_id = "+order_id+" ", (err, rows) => {
-                           console.log(err) 
-                           res.status(200).send({"status":true, "message":"verify_otp matched"})
+                    if (pickup_order_confirm_code == verify_otp) {
+                        connection.query("UPDATE `order_delivery_details` SET `order_status` = 'pickuped' , `last_modification_by`='driver' ,`last_modification_by_id`= '" + req.driver_id + "'  WHERE order_id = " + order_id + " ", (err, rows) => {
+                            console.log(err)
+                            res.status(200).send({ "status": true, "message": "verify_otp matched" })
                         })
-                    }else{
-                        res.status(200).send({"status":false, "message":"verify_otp not match"})
+                    } else {
+                        res.status(200).send({ "status": false, "message": "verify_otp not match" })
                     }
 
                 } else if (for_ == "drop_order") {
-                    if(order_delivery_confirm_code === verify_otp){
-                        connection.query("UPDATE `order_delivery_details` SET `order_status` = 'delivered' , `last_modification_by`='driver' ,`last_modification_by_id`= '"+req.driver_id+"'  WHERE order_id = "+order_id+" ", (err, rows) => {
-                            console.log(err) 
-                            res.status(200).send({"status":true, "message":"verify_otp matched"})
-                         })
-                    }else{
-                        res.status(200).send({"status":false, "message":"verify_otp not match"})
+                    if (order_delivery_confirm_code == verify_otp) {
+                        connection.query("UPDATE `order_delivery_details` SET `order_status` = 'delivered' , `last_modification_by`='driver' ,`last_modification_by_id`= '" + req.driver_id + "'  WHERE order_id = " + order_id + " ", (err, rows) => {
+                            console.log(err)
+                            res.status(200).send({ "status": true, "message": "verify_otp matched" })
+                        })
+                    } else {
+                        res.status(200).send({ "status": false, "message": "verify_otp not match" })
                     }
                 } else {
-                    res.status(200).send({"status":false, "message":"only use for_ drop_order , pickup_order"})
+                    res.status(200).send({ "status": false, "message": "only use for_ drop_order , pickup_order" })
                 }
 
             } else {
-                res.status(200).send({"status":false, "message":"order not found"})
+                res.status(200).send({ "status": false, "message": "order not found" })
 
             }
         }
