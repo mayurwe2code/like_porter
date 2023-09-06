@@ -64,7 +64,6 @@ delivery_router.put("/change_vehicle_feild", fetch_admin_driver, change_vehicle_
 //deliver--------admin-----------
 delivery_router.post("/order_asign_by_delivery_admin", fetch_admin_driver, order_asign_by_delivery_admin);
 
-
 //user--order--api's
 delivery_router.post("/add_order_by_user", auth_user, add_order_by_user);
 
