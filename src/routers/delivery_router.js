@@ -58,7 +58,6 @@ delivery_router.post("/update_your_vehicle", fetch_admin_driver, upload.fields([
 delivery_router.post("/get_delivery_detaile_list_for_nursery_admin", admin_auth, get_delivery_detaile_list);
 delivery_router.get("/delivery_area_list", fetch_admin_driver, delivery_area_list);
 delivery_router.put("/active_deactive_area", fetch_admin_driver, active_deactive_area);
-delivery_router.put("/change_order_detaile_status", fetch_admin_driver, change_order_detaile_status);
 delivery_router.post("/delivery_verify_code_match", driver_auth, delivery_verify_code_match);
 delivery_router.put("/change_vehicle_feild", fetch_admin_driver, change_vehicle_feild);
 //deliver--------admin-----------
@@ -71,6 +70,8 @@ delivery_router.post("/add_order_by_user", auth_user, add_order_by_user);
 delivery_router.post("/get_delivery_detaile_list", fetch_admin_driver, get_delivery_detaile_list);
 delivery_router.put("/reject_not_res_order", fetch_admin_driver, reject_not_res_order);
 delivery_router.post("/pickup_and_drop_otp_verify", driver_auth, pickup_and_drop_otp_verify);
+delivery_router.put("/change_order_detaile_status", fetch_admin_driver, change_order_detaile_status);
+
 
 export default delivery_router;
 
