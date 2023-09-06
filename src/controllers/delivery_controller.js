@@ -715,29 +715,21 @@ export function active_deactive_area(req, res) {
 export function change_order_detaile_status(req, res) {
     let { order_id, order_status, status_comment } = req.body
 
-
     let query_ = ""
     if (req.headers.admin_token != "" && req.headers.admin_token != undefined && req.headers.admin_token != null) {
-        query_ = "UPDATE `order_delivery_details` SET `order_status`='" + order_status + "', `last_modification_by`='admin', `last_modification_by_id`='" + req.admin_id + "'"
+        query_ = "UPDATE `order_delivery_details` SET `order_status`='" + order_status + "', `last_modification_by`='admin', `last_modification_by_id`='" + req.admin_id + "' WHERE order_id = '" + order_id + "'"
     }
     if (req.headers.driver_token != "" && req.headers.driver_token != undefined && req.headers.driver_token != null) {
-        query_ = "UPDATE `order_delivery_details` SET `order_status`='" + req.body.order_status + "', `last_modification_by`='delivery_man', `last_modification_by_id`='" + req.driver_id + "',`status_comment`='" + req.body.status_comment + "'"
-        // driver_not_responsed rejected_by_driver
-
+        query_ = "UPDATE `order_delivery_details` SET `order_status`='" + req.body.order_status + "', `last_modification_by`='delivery_man', `last_modification_by_id`='" + req.driver_id + "',`status_comment`='" + req.body.status_comment + "' WHERE order_id = '" + order_id + "' AND driver_id = '"+req.driver_id+"' AND (order_status = 'pickuped' OR order_status = 'failed_delivery_attempt' OR order_status = 'in_transit' OR order_status = 'rejected_by_driver')"
     }
-    console.log(query_ + " WHERE order_id='" + order_id + "'")
-    connection.query(query_ + " WHERE order_id='" + order_id + "'", (err, rows) => {
+
+    console.log(query_)
+    connection.query(query_, (err, rows) => {
         if (err) {
             console.log(err)
             res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "something went wrong", "status": false });
         } else {
             if (rows.affectedRows >= 1) {
-                // connection.query("UPDATE `order` SET `status_order`='" + order_status + "' WHERE order_id='" + order_id + "'", (err, rows) => {
-                //     console.log("-------------order_delivery_details---order--539----------------" + err)
-                // })
-
-                connection.query("UPDATE `order` SET `status_order`='" + order_status + "' WHERE order_id='" + order_id + "'", (err, rows) => { console.log(rows) })
-
                 res.status(StatusCodes.OK).json({ message: "status changed successfull", "status": true });
             } else {
                 res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "something went wrong", "status": false });
