@@ -11,7 +11,7 @@ import {
     delivery_admin_forgot_password,
     delivery_update_admin,
     delivery_add_admin,
-    delivery_admin_search, delivery_admin
+    delivery_admin_search, delivery_admin, set_fare_of_vehicles, update_fare_of_vehicles, vehicle_fare_list
 } from "../controllers/admin_controller.js";
 import { auth_user, fetch_user, fetch_admin_driver } from '../../middleware/auth.js'
 const adminRouter = express.Router();
@@ -32,6 +32,9 @@ adminRouter.put("/delivery_update_admin", fetch_admin_driver, delivery_update_ad
 adminRouter.post("/delivery_add_admin", fetch_admin_driver, delivery_add_admin)
 adminRouter.post("/delivery_admin_search", fetch_admin_driver, delivery_admin_search)
 adminRouter.get("/delivery_admin", fetch_admin_driver, delivery_admin)
+adminRouter.post("/set_fare_of_vehicles", fetch_admin_driver, set_fare_of_vehicles)
+adminRouter.put("/update_fare_of_vehicles", fetch_admin_driver, update_fare_of_vehicles)
+adminRouter.get("/vehicle_fare_list", vehicle_fare_list)
 export default adminRouter;
 
 

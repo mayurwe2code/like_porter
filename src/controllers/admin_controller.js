@@ -2,6 +2,7 @@ import connection from "../../Db.js";
 import bcrypt from "bcrypt"
 import nodemailer from "nodemailer"
 import jwt from 'jsonwebtoken'
+import { check_blank_key_in_obj } from '../common/req_object_check.js'
 
 const ADMIN_JWT_SECRET_KEY = process.env.ADMIN_JWT_SECRET_KEY
 const DRIVER_ADMIN_JWT_SECRET_KEY = process.env.DRIVER_ADMIN_JWT_SECRET_KEY
@@ -599,8 +600,66 @@ function delivery_admin(req, res) {
 
 }
 
+function set_fare_of_vehicles(req, res) {
+    let { vehicle_type, discount, admin_commission, fare_per_km, min_fare } = req.body
+    console.log("set_fare_of_vehicles-------------------")
+    connection.query("INSERT INTO `set_vehicle_fare`(`vehicle_type`, `discount`, `admin_commission`, `fare_per_km`, `min_fare`) VALUES ('" + vehicle_type + "','" + discount + "','" + admin_commission + "','" + fare_per_km + "','" + min_fare + "')", (err, rows, fields) => {
+        if (err) {
+            //console.log("/category_error"+err)
+            res.status(200).send({ status: false, message: "find some error" })
+        } else {
+            ////console.log("_____")
+            res.status(200).send({ status: true, message: "successfully add data", response: rows })
+        }
+    })
+
+}
+
+async function update_fare_of_vehicles(req, res) {
+    let { vehicle_type, discount, admin_commission, fare_per_km, min_fare } = req.body
+    let req_body = req.body
+    let checked_req_body = await check_blank_key_in_obj(req_body)
+    if (checked_req_body) {
+        const query_maker = (req_body_) => {
+            let query_ = "UPDATE `set_vehicle_fare` SET updated_on = NOW() "
+            for (let k in req_body_) {
+                if (req_body[k] && req_body[k] != "id") {
+                    query_ += ` , ${k} = '${req_body[k]}'`
+                }
+            }
+            return query_
+        }
+        console.log(query_maker(req_body) + " WHERE id = " + req_body["id"] + "")
+        connection.query(query_maker(req_body) + " WHERE id = " + req_body["id"] + "", (err, rows, fields) => {
+            if (err) {
+                //console.log("/category_error"+err)
+                res.status(200).send({ status: false, message: "find some error" })
+            } else {
+                ////console.log("_____")
+                if (rows.changedRows >= 1) {
+                    res.status(200).send({ status: true, message: "successfully updated", response: rows })
+                } else {
+                    res.status(200).send({ status: false, message: "find some error", response: rows })
+                }
+            }
+        })
+    } else {
+        res.status(200).send({ status: false, message: "req json do not fill with blank, null, undefined values" })
+    }
+}
+
+function vehicle_fare_list(req, res) {
+    connection.query("SELECT * FROM `set_vehicle_fare`", (err, rows, fields) => {
+        if (err) {
+            //console.log("/category_error"+err)
+            res.status(200).send({ status: false, message: "find some error" })
+        } else {
+            res.status(200).send({ status: true, message: "ok", response: rows })
+        }
+    })
+}
 
 export {
     admin_login, update_password, admin_forgot_password, update_admin, add_admin, admin_search, admin,
-    delivery_admin_login, delivery_update_password, delivery_admin_forgot_password, delivery_update_admin, delivery_add_admin, delivery_admin_search, delivery_admin
+    delivery_admin_login, delivery_update_password, delivery_admin_forgot_password, delivery_update_admin, delivery_add_admin, delivery_admin_search, delivery_admin, set_fare_of_vehicles, update_fare_of_vehicles, vehicle_fare_list
 };
