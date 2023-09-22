@@ -637,9 +637,9 @@ async function update_fare_of_vehicles(req, res) {
             } else {
                 ////console.log("_____")
                 if (rows.changedRows >= 1) {
-                    res.status(200).send({ status: true, message: "successfully updated", response: rows })
+                    res.status(200).send({ status: true, message: "Successfully Updated", response: rows })
                 } else {
-                    res.status(200).send({ status: false, message: "find some error", response: rows })
+                    res.status(200).send({ status: false, message: "The value is already set.", response: rows })
                 }
             }
         })

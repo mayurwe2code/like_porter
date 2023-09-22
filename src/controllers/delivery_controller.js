@@ -384,14 +384,19 @@ export async function driver_details(req, res) {
 //     });
 // }
 export async function only_driver_list(req, res) {
-    let query_ = "select delivery_man.*, vehicle_id,vehicle_add_by,company_name,model,color,registration_no_of_vehicle,chassis_number,vehicle_owner_name,make_of_vehicle,vehicle_registerd_by,puc_expiration_date,insurance_expiration_date,registration_expiration_date,registration,puc_certificate,insurance, vehicle_detaile.is_active AS vehicle_is_active from delivery_man LEFT JOIN vehicle_detaile ON vehicle_detaile.driver_id = delivery_man.driver_id where"
+    let query_ = "select delivery_man.*, vehicle_id,vehicle_add_by,company_name,model,color,registration_no_of_vehicle,chassis_number,vehicle_owner_name,make_of_vehicle,vehicle_registerd_by,puc_expiration_date,insurance_expiration_date,registration_expiration_date,registration,puc_certificate,insurance, vehicle_detaile.is_active AS vehicle_is_active, vehicle_type,vehicle_detaile.status AS vehicle_status from delivery_man LEFT JOIN vehicle_detaile ON vehicle_detaile.driver_id = delivery_man.driver_id where"
 
     if (req.body.search) {
         query_ += ` driver_name LIKE '%${req.body.search}%' OR driver_last_name LIKE '%${req.body.search}%' AND  `
     }
     for (let k in req.body) {
         if (req.body[k] != "" && k != "search") {
-            query_ += ` \`delivery_man\`.${k} = '${req.body[k]}' AND  `
+            if (k.includes('vehicle_detaile.')) {
+                query_ += ` ${k} = '${req.body[k]}' AND  `
+            } else {
+                query_ += ` \`delivery_man\`.${k} = '${req.body[k]}' AND  `
+            }
+
         }
     }
 
@@ -683,26 +688,105 @@ export function add_order_by_user(req, res) {
 export function order_asign_by_delivery_admin(req, res) {
     let { order_id, driver_id } = req.body
     console.log({ order_id, driver_id })
-    connection.query("SELECT * FROM `vehicle_detaile` WHERE driver_id = " + driver_id + " AND is_active='1'", (err, rows) => {
+    connection.query("SELECT * FROM `order_delivery_details` WHERE order_id = " + order_id + "", (err, rows) => {
         if (err) {
             console.log("error vehicle_detaile=========" + err)
         } else {
-
             if (rows != "") {
-                console.log("--ok--------------vehicle_detaile====ok=====")
-                console.log(rows[0]["vehicle_id"])
-                connection.query("UPDATE `order_delivery_details` SET `driver_id`='" + driver_id + "', `vehicle_id`='" + rows[0]["vehicle_id"] + "',`order_asign_by`='" + req.created_by_id + "',`last_modification_by`='delivery_admin',`last_modification_by_id`='" + req.created_by_id + "' WHERE order_id = " + order_id + "", (err, rows) => {
-                    if (err) {
-                        console.log(err)
-                        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "something went wrong", "status": false });
-                    } else {
-                        res.status(StatusCodes.OK).json(rows);
-                    }
+                let { pickup_area_lat, pickup_area_long, vehicle_type, driver_id } = rows[0]
+                if (req.body.driver_id != driver_id) {
+                    console.log("SELECT *, 6371 * ACOS( COS(RADIANS(" + pickup_area_lat + ")) * COS(RADIANS(current_latitude)) * COS(RADIANS(current_longitude ) - RADIANS(" + pickup_area_long + ")) + SIN(RADIANS(" + pickup_area_lat + ")) * SIN(RADIANS(current_latitude)) ) AS distance FROM driver_and_vehicle_view WHERE driver_id = '" + req.body.driver_id + "' AND vehicle_is_active = '1' AND delivery_man_is_active = '1' AND approove_by_admin = '1' AND vehicle_type = '" + vehicle_type + "' ORDER BY distance LIMIT 1")
+                    connection.query("SELECT *, 6371 * ACOS( COS(RADIANS(" + pickup_area_lat + ")) * COS(RADIANS(current_latitude)) * COS(RADIANS(current_longitude ) - RADIANS(" + pickup_area_long + ")) + SIN(RADIANS(" + pickup_area_lat + ")) * SIN(RADIANS(current_latitude)) ) AS distance FROM driver_and_vehicle_view WHERE driver_id = '" + req.body.driver_id + "' AND vehicle_is_active = '1' AND delivery_man_is_active = '1' AND approove_by_admin = '1' AND vehicle_type = '" + vehicle_type + "' ORDER BY distance LIMIT 1", async (err, rows) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "driver not available find some error", "status": false });
+                        } else {
+                            if (rows.length) {
+                                let { driver_id, vehicle_id, current_latitude, current_longitude, distance } = rows[0]
+                                //--------add_distance and duration--------
+
+                                let chouse_type_of_vehicle = "driving"
+                                if (vehicle_type == "bicycles" || vehicle_type == "motorcycles") {
+                                    chouse_type_of_vehicle = "biking"
+                                }
+                                if (vehicle_type == "van" || vehicle_type == "three_wheeler_rickshaw") {
+                                    chouse_type_of_vehicle = "driving"
+                                }
+                                if (vehicle_type == "small_truck" || vehicle_type == "truck" || vehicle_type == "trailer" || vehicle_type == "refrigerated_trucks") {
+                                    chouse_type_of_vehicle = "trucking"
+                                }
+                                // driving,biking,trucking
+                                let res_data = await fetchDistanceMatrix(chouse_type_of_vehicle, current_latitude, current_longitude, pickup_area_lat, pickup_area_long)
+                                console.log("---608-----------")
+                                console.log(res_data)
+                                if (res_data["status"] == true) {
+                                    res_data["distanceInKilometers"]
+                                    res_data["formattedDuration"]
+                                    //--------add_distance and duration--------
+
+                                    console.log(driver_id)
+                                    console.log("-3-----" + "UPDATE `order_delivery_details` SET `driver_id`='" + driver_id + "',`vehicle_id`='" + vehicle_id + "',`order_asign_by` = 'admin', `last_modification_by` = 'admin', `last_modification_by_id` = " + req.admin_id + " ,`updated_on`= NOW(),`arial_distance_of_pickup_location_to_driver` = '" + distance + "',`road_distance_of_pickup_location_to_driver`='" + res_data["distanceInKilometers"] + "', `arival_time_of_driver` = '" + res_data["formattedDuration"] + "' WHERE order_id = '" + order_id + "'")
+
+                                    // `order_id`, `driver_id`, `vehicle_id`, `order_asign_by`, `last_modification_by`, `last_modification_by_id`,`updated_on`, `order_ready_to_asign_for_delivery_by`, `delivery_date`, `delivered_date`, `given_pickup_time_by_driver`,`arial_distance_of_pickup_location_to_driver`, `road_distance_of_pickup_location_to_driver`, `arival_time_of_driver`,`fare_amount_of_order`, `vehicle_type`
+                                    connection.query("UPDATE `order_delivery_details` SET `driver_id`='" + driver_id + "',`vehicle_id`='" + vehicle_id + "',`order_asign_by` = 'admin', `last_modification_by` = 'admin', `last_modification_by_id` = " + req.admin_id + " ,`updated_on`= NOW(),`arial_distance_of_pickup_location_to_driver` = '" + distance + "',`road_distance_of_pickup_location_to_driver`='" + res_data["distanceInKilometers"] + "', `arival_time_of_driver` = '" + res_data["formattedDuration"] + "' WHERE order_id = '" + order_id + "'", (err, rows) => {
+                                        if (err) {
+                                            console.log(err)
+                                            res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "something went wrong", "status": false });
+                                        } else {
+
+                                            // connection.query("SELECT * FROM user WHERE id = " + req.user_id + "", (err, rows) => {
+                                            //     let { email } = rows[0]
+
+                                            //     const mail_configs = {
+                                            //         from: 'rahul.verma.we2code@gmail.com',
+                                            //         to: email,
+                                            //         subject: 'like_porter pickup order one time password',
+                                            //         text: "use otp within 60 sec.",
+                                            //         html: "<h1>your one time password " + pickup_order_confirm_code + " <h1/>"
+                                            //     }
+                                            //     nodemailer.createTransport({
+                                            //         service: 'gmail',
+                                            //         auth: {
+                                            //             user: "rahul.verma.we2code@gmail.com",
+                                            //             pass: "sfbmekwihdamgxia",
+                                            //         }
+                                            //     })
+                                            //         .sendMail(mail_configs, (err) => {
+                                            //             if (err) {
+                                            //                 console.log(err)
+                                            //                 return //console.log({ "email_error": err });
+                                            //             } else {
+
+                                            //             }
+                                            //         })
+                                            // })
+
+                                            if (rows.affectedRows >= 1) {
+                                                res.status(200).json({ message: "Order successfully assigned to driver", "status": true, order_id, result: rows });
+                                            } else {
+                                                res.status(200).json({ message: "find some error, opration failed", "status": false, order_id, result: rows });
+                                            }
+                                        }
+                                    }
+                                    );
+
+                                } else {
+                                    res.status(200).json({ message: "find error", "status": false })
+                                }
+                            } else {
+                                res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "driver not available", "status": false })
+                            }
+                        }
+                    })
+                } else {
+                    res.status(200).json({ message: "Already assigned to the driver you selected", "status": false });
                 }
-                );
             } else {
-                res.status(StatusCodes.OK).json({ message: "driver has no vehicle", "status": false });
+                res.status(StatusCodes.OK).json({ message: "order not found", "status": false });
             }
+
+            // `order_id`, `driver_id`, `vehicle_id`, `order_asign_by`, `last_modification_by`, `last_modification_by_id`,`updated_on`, `order_ready_to_asign_for_delivery_by`, `delivery_date`, `delivered_date`, `given_pickup_time_by_driver`,`arial_distance_of_pickup_location_to_driver`, `road_distance_of_pickup_location_to_driver`, `arival_time_of_driver`,`fare_amount_of_order`, `vehicle_type`
+            //========================================================================================
         }
     });
 }

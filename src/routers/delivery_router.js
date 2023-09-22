@@ -7,7 +7,7 @@ import {
 import multer from "multer"
 
 // const multerStorage = multer.diskStorage({
-//     destination: (req, file, cb) => {
+//     destination: (req, file, cb) => {   
 //         cb(null, "public/driver_profile/");
 //     },
 //     filename: (req, file, cb) => {
@@ -60,7 +60,7 @@ delivery_router.get("/delivery_area_list", fetch_admin_driver, delivery_area_lis
 delivery_router.put("/active_deactive_area", fetch_admin_driver, active_deactive_area);
 delivery_router.put("/change_vehicle_feild", fetch_admin_driver, change_vehicle_feild);
 //deliver--------admin-----------
-delivery_router.post("/order_asign_by_delivery_admin", fetch_admin_driver, order_asign_by_delivery_admin);
+delivery_router.put("/order_asign_by_delivery_admin", fetch_admin_driver, order_asign_by_delivery_admin);
 
 //user--order--api's
 delivery_router.post("/add_order_by_user", auth_user, add_order_by_user);
