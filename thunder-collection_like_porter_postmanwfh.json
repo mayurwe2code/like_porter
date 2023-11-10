@@ -1,0 +1,1803 @@
+{
+    "info": {
+        "_postman_id": "31dce675-d783-47b2-89c0-abd464ac0e27",
+        "name": "like_porter",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "user_signup_&_login Copy",
+            "item": [
+                {
+                    "name": "user_details",
+                    "item": [
+                        {
+                            "name": "user_details",
+                            "request": {
+                                "method": "GET",
+                                "url": {
+                                    "raw": "localhost:9999/user_details",
+                                    "path": [
+                                        "user_details"
+                                    ],
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "9999"
+                                },
+                                "header": [
+                                    {
+                                        "key": "user_token",
+                                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNjg3NjA3MTkwfQ.vmXLLBuorkNtyA1quLhxrWfh860u5YN65fP-EX_2CQ0"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "change_user_password",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "raw": "localhost:9999/change_user_password",
+                                    "path": [
+                                        "change_user_password"
+                                    ],
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "9999"
+                                },
+                                "body": {
+                                    "mode": "raw",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    },
+                                    "raw": " {\"old_password\":\"12345678\", \"new_password\":\"87654321\",\"email\":\"mayur.we2code@gmail.com\"}\n"
+                                }
+                            }
+                        },
+                        {
+                            "name": "forgate_user_password",
+                            "request": {
+                                "method": "POST",
+                                "url": {
+                                    "raw": "localhost:9999/user_forgate_password",
+                                    "path": [
+                                        "user_forgate_password"
+                                    ],
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "9999"
+                                },
+                                "body": {
+                                    "mode": "raw",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    },
+                                    "raw": "{\"email\":\"aashi.we2code@gmail.com\"}"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "user_signup",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:7777/user_signup",
+                            "path": [
+                                "user_signup"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"email\":\"mayur.wwe2code@gmail.com\", \"password\":\"12345678\",\"name\":\"sasas\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "user_otp_verify",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:7777/user_otp_verify",
+                            "path": [
+                                "user_otp_verify"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"email\":\"mayur.wwe2code@gmail.com\",\"otp\":\"160680\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "user_login",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:7777/user_login",
+                            "path": [
+                                "user_login"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"email\":\"test1@gmail.com\", \"password\":\"12345\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "update_user_profile",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "localhost:7777/update_user",
+                            "path": [
+                                "update_user"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "header": [
+                            {
+                                "key": "user_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAxLCJpYXQiOjE2OTM1NjYxNTV9.D_GblJseaZdaNCSAt9cRTdFGkySj4aeJio3Iw1fkBsk"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "first_name",
+                                    "value": "mayur new user ",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "last_name",
+                                    "value": "yadav",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "phone_no",
+                                    "value": "987654657",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "pincode",
+                                    "value": "4178",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "city",
+                                    "value": "indoe",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "address",
+                                    "value": "dfgsdessesfs",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "alternate_address",
+                                    "value": "fsfsfsfsfssfs",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "image",
+                                    "src": "/home/we2code/Downloads/sqlerr.png",
+                                    "type": "file"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "user_delete_&_restore",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "http://www.indiakinursery.com:9999/delete_restore_user",
+                            "path": [
+                                "delete_restore_user"
+                            ],
+                            "protocol": "http",
+                            "host": [
+                                "www",
+                                "indiakinursery",
+                                "com"
+                            ],
+                            "port": "9999"
+                        },
+                        "header": [
+                            {
+                                "key": "admin_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiYWRtaW5fdHlwZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjg0MjMzMDI1fQ.oCqt64P3lJwcYV5AE_uT4PfhlGqk-kkdbjWEkuth_0c"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"user_id\":\"88\",\"is_delete\":\"1\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "user_forgate_password_update",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:9999/user_forgate_password_update",
+                            "path": [
+                                "user_forgate_password_update"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "9999"
+                        },
+                        "header": [
+                            {
+                                "key": "user_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNjg5MzE5MTEyfQ.3zP7mHghky0FU0yBY7J1LScvH95dWcwJ6Bwqtg004e4"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"password\":\"654321\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "set_notification_token",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "localhost:8888/set_notification_token",
+                            "path": [
+                                "set_notification_token"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8888"
+                        },
+                        "header": [
+                            {
+                                "key": "user_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTksImlhdCI6MTY4Mjc1MjI4N30.NIM04ZTNoLtdpVD4hmjp2qACsa10KSkfHDbnmMbDgf8"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"token\":\"123456789\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "social_login",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:9999/social_login",
+                            "path": [
+                                "social_login"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "9999"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"email\":\"mayur1111@gmail.com\"}"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "user_order_apis",
+            "item": [
+                {
+                    "name": "add_order_by_user",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:7777/add_order_by_user",
+                            "path": [
+                                "add_order_by_user"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "header": [
+                            {
+                                "key": "user_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAxLCJpYXQiOjE2OTQ1OTYwOTV9.fvZd_mtB8nAoz8fUu4NQuQtPwl_zRIEtU2Of_FHqQuk"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"pickup_location_address\":\"LIG----truck chouraha\", \"pickup_city\":\"indore\", \"pickup_area_pin\":\"452010\", \"pickup_location_contect\":\"9827803082\", \"pickup_area_lat\":\"22.6843\",\"pickup_area_long\":\"75.8289\", \"given_pickup_time_by_user\":\"\", \"drop_location_address\":\"bhnwar kunwa chouraha\", \"drop_city\":\"indore\", \"drop_area_pin\":\"\", \"drop_location_contect\":\"9827803082\", \"drop_lat\":\"22.7231\", \"drop_long\":\"75.8302\",\"vehicle_type\":\"truck\"}\n\n    \n    "
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "driver_login_signup_apis",
+            "item": [
+                {
+                    "name": "driver_otp_verify",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:7777/driver_otp_verify",
+                            "path": [
+                                "driver_otp_verify"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "    {\"email\":\"mayur_driver@gmail.com\",\n    \"otp\":\"523973\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "signup_verify",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:7777/sign_by_driver",
+                            "path": [
+                                "sign_by_driver"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "    {\"email\":\"mayur_driver@gmail.com\",\n    \"password\":\"12345678\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "driver_login",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:7777/driver_login",
+                            "path": [
+                                "driver_login"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"email\":\"mayur_driver@gmail.com\",\"password\":\"147147147\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "driver_forgate_password",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:7777/driver_forgate_password",
+                            "path": [
+                                "driver_forgate_password"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"email\":\"mayur_driver@gmail.com\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "driver_forgate_password_update",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:7777/driver_forgate_password_update",
+                            "path": [
+                                "driver_forgate_password_update"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "header": [
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjkzODA2NjAwfQ.h3-EfKlcG_MzZN_p8kV1f3ooM5vL1Os2vsUAm0wstqs"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"password\":\"147147147\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "set_driver_notification_token",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "localhost:8888/set_driver_notification_token",
+                            "path": [
+                                "set_driver_notification_token"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8888"
+                        },
+                        "header": [
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNjgzMDI4OTY2fQ.oqYJvtlJOwU53BKSgmW3GSdmleV6KRQGbrMTVrvtdk4"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"token\":\"jhgfdz\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "driver_details",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "localhost:7777/driver_details",
+                            "path": [
+                                "driver_details"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "header": [
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjkzODA2NjYwfQ.zv3jZwbdKT3CNYHId_tQ5rxqux152EzljW3VMChZyGk"
+                            },
+                            {
+                                "key": "admin_token",
+                                "value": "admin_master_token=we2code_123456",
+                                "disabled": true
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{}"
+                        }
+                    }
+                },
+                {
+                    "name": "delete_restore_driver",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "localhost:7777/delete_restore_driver",
+                            "path": [
+                                "delete_restore_driver"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "header": [
+                            {
+                                "key": "admin_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiYWRtaW5fdHlwZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjk0MDAxNzM3fQ.ZrVgocIvDmY-eqCZ1wZX-p_3e1JFGVoiJdhqmXZOi5w"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{ \"driver_id\":\"3\", \"is_active\":\"0\",\"status\": \"pending\" }"
+                        }
+                    }
+                },
+                {
+                    "name": "update_driver",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "localhost:7777/update_driver",
+                            "path": [
+                                "update_driver"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "header": [
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjkzOTk4MTg5fQ.h9pA2eR8YjBcjApqJPrm_Kt6fzavIxU2rsFORpkxGKg"
+                            },
+                            {
+                                "key": "admin_token",
+                                "value": "admin_master_token=we2code_123456",
+                                "disabled": true
+                            },
+                            {
+                                "key": "admin_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiYWRtaW5fdHlwZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjkzMjg2NTYxfQ.3af6B__Ke_kH5cPAfzz9gOt-PeGoWE5faWrYiKiC3lU",
+                                "disabled": true
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "driver_name",
+                                    "value": "updated_by_driver_raahul",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "driver_last_name",
+                                    "value": "yadav",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "date_of_birth",
+                                    "value": "1999/07/30",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "current_address",
+                                    "value": "indore scheme 78",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "gender",
+                                    "value": "male",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "age",
+                                    "value": "24",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "contect_no",
+                                    "value": "98278030235",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "aadhar_no",
+                                    "value": "4587458745557",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "licence_no",
+                                    "value": "212131722",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "licence_issue_date",
+                                    "value": "2022/07/12",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "licence_validity_date",
+                                    "value": "2024/07/12",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "licence",
+                                    "value": "",
+                                    "disabled": true,
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "aadhar_card",
+                                    "value": "",
+                                    "disabled": true,
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "driver_id",
+                                    "value": "7",
+                                    "disabled": true,
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "image",
+                                    "src": "/home/we2code/Downloads/sqlerr.png",
+                                    "disabled": true,
+                                    "type": "file"
+                                },
+                                {
+                                    "key": "licence",
+                                    "src": "/home/we2code/Downloads/exam_db_error.png",
+                                    "disabled": true,
+                                    "type": "file"
+                                },
+                                {
+                                    "key": "aadhar_card",
+                                    "src": "/home/we2code/Downloads/jpegls-home.jpg",
+                                    "disabled": true,
+                                    "type": "file"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "driver_add_by_admin",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "localhost:7777/driver_add_by_admin",
+                            "path": [
+                                "driver_add_by_admin"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "header": [
+                            {
+                                "key": "admin_token",
+                                "value": ""
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "dilevery Copy",
+            "item": [
+                {
+                    "name": "chouse_driver_for_delivery",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:9999/chouse_driver_for_delivery",
+                            "path": [
+                                "chouse_driver_for_delivery"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "9999"
+                        },
+                        "header": [
+                            {
+                                "key": "admin_token",
+                                "value": "admin_master_token=we2code_123456"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{ \"order_id\":\"\", \"delivery_lat\":\"\", \"delivery_log\":\"\",\"nearest_of_delivery_pin\":\"\" }"
+                        }
+                    }
+                },
+                {
+                    "name": "active_deactive_area",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "localhost:8888/active_deactive_area",
+                            "path": [
+                                "active_deactive_area"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8888"
+                        },
+                        "header": [
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNjgzMDI4OTY2fQ.oqYJvtlJOwU53BKSgmW3GSdmleV6KRQGbrMTVrvtdk4",
+                                "disabled": true
+                            },
+                            {
+                                "key": "admin_token",
+                                "value": "admin_master_token=we2code_123456"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"id\":\"21\",\"driver_id\":\"20\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "change_order_detaile_status",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "localhost:9999/change_order_detaile_status",
+                            "path": [
+                                "change_order_detaile_status"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "9999"
+                        },
+                        "header": [
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjkzMjgzNjk5fQ.Xs4JIVyNXQf3QrEtU6u5QXhd1l7pmFlsjvLBZTgrQoM"
+                            },
+                            {
+                                "key": "admin_token",
+                                "value": "admin_master_token=we2code_123456",
+                                "disabled": true
+                            },
+                            {
+                                "key": "user_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsImlhdCI6MTY4MzI2OTYxOX0.4uqWMD7ltXs861mrUY2tlqV9VIwa6bOjqqGnSR6DJds",
+                                "disabled": true
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"order_id\":\"960892\",\"order_status\":\"Failed_Delivery_Attempts\"}\n"
+                        }
+                    }
+                },
+                {
+                    "name": "delivery_verify_code_match",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:9999/delivery_verify_code_match",
+                            "path": [
+                                "delivery_verify_code_match"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "9999"
+                        },
+                        "header": [
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjkyMzU4NTc4fQ.03XSWrZL28gn1NFmcvrxFjSDxlVWgFQJYgL8VU0c074"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{ \"order_id\":\"837444\", \"order_delivery_confirm_code\":\"1088677\" }"
+                        }
+                    }
+                },
+                {
+                    "name": "order_details_for_driver",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "localhost:9999/order_details_for_driver?id=611819",
+                            "query": [
+                                {
+                                    "key": "id",
+                                    "value": "611819"
+                                }
+                            ],
+                            "variable": [],
+                            "path": [
+                                "order_details_for_driver"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "9999"
+                        },
+                        "header": [
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjkyMzYyNzQzfQ.5Nzl7UTD6T2z6ZGPXO0Z8MyY7gbiJ-zxsvO2Iwn3Sp8"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "driver_list",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:9999/driver_list",
+                            "path": [
+                                "driver_list"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "9999"
+                        },
+                        "header": [
+                            {
+                                "key": "driver_token",
+                                "value": "",
+                                "disabled": true
+                            },
+                            {
+                                "key": "admin_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiYWRtaW5fdHlwZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjkzMjIzNTQ5fQ.lJQxi3GePtvktdzdKgKYzThHUhjN02ppud0BsAuQ9-8"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{}"
+                        }
+                    }
+                },
+                {
+                    "name": "order_asign_by_delivery_admin",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:9999/order_asign_by_delivery_admin",
+                            "path": [
+                                "order_asign_by_delivery_admin"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "9999"
+                        },
+                        "header": [
+                            {
+                                "key": "admin_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiYWRtaW5fdHlwZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjg0ODE3OTg2fQ.ft-oTZcoTVsmaVKcJfRpAAYNi3q5H3PmeFSRZ-soW2Y"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{ \"order_id\":\"211149\", \"driver_id\":\"1\"}\n"
+                        }
+                    }
+                },
+                {
+                    "name": "get_delivery_detaile_list",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:7777/get_delivery_detaile_list",
+                            "path": [
+                                "get_delivery_detaile_list"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "header": [
+                            {
+                                "key": "admin_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiYWRtaW5fdHlwZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjg0ODE3OTg2fQ.ft-oTZcoTVsmaVKcJfRpAAYNi3q5H3PmeFSRZ-soW2Y",
+                                "disabled": true
+                            },
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjk0NjAwMTE2fQ.gG-fzoAUcc1NxniG-lXYw6Yta9poeZLRLmhF9ih439U"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"date_from\":\"\",\"date_to\":\"\"}"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "driver_area__apis",
+            "item": [
+                {
+                    "name": "add_working_area",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:7777/add_working_area",
+                            "path": [
+                                "add_working_area"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "header": [
+                            {
+                                "key": "admin_token",
+                                "value": "admin_master_token=we2code_123456",
+                                "disabled": true
+                            },
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjkzODA2NjYwfQ.zv3jZwbdKT3CNYHId_tQ5rxqux152EzljW3VMChZyGk"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"city\":\"indore\",\"area_name\":\"satya sai chourah22\",\"pin_code\":\"452010\",\"driver_log\":\"\",\"driver_lat\":\"\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "delivery_area_list",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "192.168.29.108:7777/delivery_area_list",
+                            "query": [
+                                {
+                                    "key": "city",
+                                    "value": "indore",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "area_name",
+                                    "value": "ALL Indore",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "is_active",
+                                    "value": "1",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "pin_code",
+                                    "value": "452010",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "city",
+                                    "value": "dewas",
+                                    "disabled": true
+                                }
+                            ],
+                            "variable": [],
+                            "path": [
+                                "delivery_area_list"
+                            ],
+                            "host": [
+                                "192",
+                                "168",
+                                "29",
+                                "108"
+                            ],
+                            "port": "7777"
+                        },
+                        "header": [
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjkzODA2NjYwfQ.zv3jZwbdKT3CNYHId_tQ5rxqux152EzljW3VMChZyGk"
+                            },
+                            {
+                                "key": "admin_token",
+                                "value": "admin_master_token=we2code_123456",
+                                "disabled": true
+                            },
+                            {
+                                "key": "city",
+                                "value": "",
+                                "disabled": true
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "vehicle_apis",
+            "item": [
+                {
+                    "name": "register_your_vehicle",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "192.168.29.108:7777/register_your_vehicle",
+                            "path": [
+                                "register_your_vehicle"
+                            ],
+                            "host": [
+                                "192",
+                                "168",
+                                "29",
+                                "108"
+                            ],
+                            "port": "7777"
+                        },
+                        "header": [
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjkzODA2NjYwfQ.zv3jZwbdKT3CNYHId_tQ5rxqux152EzljW3VMChZyGk"
+                            },
+                            {
+                                "key": "admin_token",
+                                "value": "admin_master_token=we2code_123456",
+                                "disabled": true
+                            },
+                            {
+                                "key": "admin_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiYWRtaW5fdHlwZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjkxNzM2Njk1fQ.0GV_01OSJIAnRtNTeFR7ada3Nl6UJKGYJdcQANYPydk",
+                                "disabled": true
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "company_name",
+                                    "value": "maruti suzuki",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "model",
+                                    "value": "omini",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "color",
+                                    "value": "orange",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "registration_no_of_vehicle",
+                                    "value": "mp14cc104044112",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "chassis_number",
+                                    "value": "g58998fjjjj9999i9i9rtrt",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "vehicle_owner_name",
+                                    "value": "mayur omini",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "puc_expiration_date",
+                                    "value": "2024/04/04",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "insurance_expiration_date",
+                                    "value": "2024/04/05",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "registration_expiration_date",
+                                    "value": "2024/04/06",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "vehicle_type",
+                                    "value": "van",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "insurance",
+                                    "value": "",
+                                    "disabled": true,
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "registration",
+                                    "value": "",
+                                    "disabled": true,
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "puc_certificate",
+                                    "src": "/home/we2code/Downloads/sqlerr.png",
+                                    "type": "file"
+                                },
+                                {
+                                    "key": "insurance",
+                                    "src": "/home/we2code/Downloads/jpegls-home.jpg",
+                                    "type": "file"
+                                },
+                                {
+                                    "key": "registration",
+                                    "src": "/home/we2code/Downloads/exam_db_error.png",
+                                    "type": "file"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "vehicle_list",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:7777/vehicle_list",
+                            "path": [
+                                "vehicle_list"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "header": [
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjkzODA2NjYwfQ.zv3jZwbdKT3CNYHId_tQ5rxqux152EzljW3VMChZyGk"
+                            },
+                            {
+                                "key": "admin_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiYWRtaW5fdHlwZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjkxNzM2Njk1fQ.0GV_01OSJIAnRtNTeFR7ada3Nl6UJKGYJdcQANYPydk",
+                                "disabled": true
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"vehicle_id\":\"\" }"
+                        }
+                    }
+                },
+                {
+                    "name": "change_vehicle_feild",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "localhost:9999/change_vehicle_feild",
+                            "path": [
+                                "change_vehicle_feild"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "9999"
+                        },
+                        "header": [
+                            {
+                                "key": "admin_token",
+                                "value": "admin_master_token=we2code_123456",
+                                "disabled": true
+                            },
+                            {
+                                "key": "admin_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiYWRtaW5fdHlwZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjkxNzM2Njk1fQ.0GV_01OSJIAnRtNTeFR7ada3Nl6UJKGYJdcQANYPydk",
+                                "disabled": true
+                            },
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNjkyNzA0Nzc3fQ.oZZbA5RDGDtD-w5QnZr7zFFTSP30RHDKrHtD9qSgb34"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"driver_id\":\"4\",\"vehicle_id\":\"2\",\"is_active\":\"1\"}"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "driver_order_apis",
+            "item": [
+                {
+                    "name": "get_delivery_detaile_list",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:7777/get_delivery_detaile_list",
+                            "path": [
+                                "get_delivery_detaile_list"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "header": [
+                            {
+                                "key": "admin_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiYWRtaW5fdHlwZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjk1MTE3MzU0fQ.cAkOFb3eqBNbTxTIc2zDaOSn44jUv1zV34PCxT6Rl9U"
+                            },
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjkzODMwNjE5fQ.GuJ9azg352JxUqR19rPhvhRQ9gPpPmgJvpc1FOIXy80",
+                                "disabled": true
+                            },
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjk0NjA2MjQ1fQ.POAYBhNDLY4vplsHfIOVbHpOvj3A1jnzdsgRqgK0_cc",
+                                "disabled": true
+                            },
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjk0NzY3OTYzfQ.8NaPbJwHerTC6uXQ_OsFsS5FMOjrTPmnbswA4jMDcu4",
+                                "disabled": true
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"date_from\":\"\",\"date_to\":\"\",\"status_comment\":\"\",\"order_id\":\"\"}\n"
+                        }
+                    }
+                },
+                {
+                    "name": "reject_not_res_order",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "localhost:7777/reject_not_res_order",
+                            "path": [
+                                "reject_not_res_order"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "header": [
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjkzODMwNjE5fQ.GuJ9azg352JxUqR19rPhvhRQ9gPpPmgJvpc1FOIXy80",
+                                "disabled": true
+                            },
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjk0NzY3OTYzfQ.8NaPbJwHerTC6uXQ_OsFsS5FMOjrTPmnbswA4jMDcu4"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"order_id\":\"966507\",\"driver_id\":\"\",\"order_status\":\"rejected_by_driver\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "pickup_and_drop_otp_verify",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:7777/pickup_and_drop_otp_verify",
+                            "path": [
+                                "pickup_and_drop_otp_verify"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "header": [
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjkzODMwNjE5fQ.GuJ9azg352JxUqR19rPhvhRQ9gPpPmgJvpc1FOIXy80"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{ \"order_id\":\"945043\", \"verify_otp\":\"116756\", \"for_\":\"drop_order\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "change_order_detaile_status",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "localhost:7777/change_order_detaile_status",
+                            "path": [
+                                "change_order_detaile_status"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "header": [
+                            {
+                                "key": "driver_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjkzOTA1MzA0fQ._SbCCHs-yDzaDFWvmfUU8MLBwlg9Ce413BuWRj_OMh4"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"order_id\":\"945043\",\"order_status\":\"rejected_by_driver\"}"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "admin Copy",
+            "item": [
+                {
+                    "name": "admin_login",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:7777/delivery_admin_login",
+                            "path": [
+                                "delivery_admin_login"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"admin_email\":\"mayur.we2code@gmail.com\",\"admin_password\":\"12345678\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "change_password",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "localhost:8888/update_password",
+                            "path": [
+                                "update_password"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8888"
+                        },
+                        "header": [
+                            {
+                                "key": "admin_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiYWRtaW5fdHlwZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjg0MjMzMzk0fQ.zkrSD9C25SNZb_pcQ9FqXLL2KluTFtw1zzpY6AfNb-A"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"admin_email\":\"rahul.verma.we2code@gmail.com\",\"admin_password\":\"12345\",\"new_admin_password\":\"123456\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "forget_password",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "localhost:8888/delivery_admin_forget_password",
+                            "path": [
+                                "delivery_admin_forget_password"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8888"
+                        },
+                        "header": [
+                            {
+                                "key": "admin_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjgzOTcwODc0fQ.sBw3_ejL1RRk4YMgp8NKM7jzCuUxnBYMYV_nlczhpqk",
+                                "disabled": true
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"admin_email\":\"mayurgeek@gmail.com\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "update_admin_profile",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "localhost:8888/delivery_update_admin",
+                            "path": [
+                                "delivery_update_admin"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8888"
+                        },
+                        "header": [
+                            {
+                                "key": "admin_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiYWRtaW5fdHlwZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjg0MTQ3MzE5fQ.DP00DZ9XDAb-niv00wvB_PIjSdiNcJTgXc_hlujqGb0"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"id\":10,\n\"admin_name\":\"Aashii\",\n\"admin_phone\":\"9999999999\",\n\"admin_type\":\"admin\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "add_admin",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:8888/delivery_add_admin",
+                            "path": [
+                                "delivery_add_admin"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8888"
+                        },
+                        "header": [
+                            {
+                                "key": "admin_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiYWRtaW5fdHlwZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjg0MjM0MTQzfQ.FZi6PHOEdqYG1-txrOxmsARZ2HZ0gjkv-9PZb1QC7ek"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n\"admin_email\":\"mayur.delivery_2@gmail.com\",\n\"admin_name\":\"mayur.delivery_5\",\n\"admin_phone\":\"111111111\",\n\"admin_type\":\"delivery_admin\",\n\"admin_password\":\"12345\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "admin_search",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:8888/admin_search",
+                            "path": [
+                                "admin_search"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8888"
+                        },
+                        "header": [
+                            {
+                                "key": "admin_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiYWRtaW5fdHlwZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjg0MTQ4OTY2fQ.VxZSw5s4hwPbyH7nR-m_3e1r9n4C8m6cDBeamuEdGcQ"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n    \"admin_name\":\"\",\n    \"admin_type\":\"\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "order_asign_by_delivery_admin",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "localhost:7777/order_asign_by_delivery_admin",
+                            "path": [
+                                "order_asign_by_delivery_admin"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "header": [
+                            {
+                                "key": "admin_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiYWRtaW5fdHlwZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjk1MTk4ODg2fQ.HmdYabXO6FPP-upVKRJcRXDJgxeRg_SW_DdZd7LHJQQ"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{ \"order_id\":\"416190\", \"driver_id\":\"7\"}"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "fare_vheicle",
+            "item": [
+                {
+                    "name": "set_fare_of_vehicles",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:7777/set_fare_of_vehicles",
+                            "path": [
+                                "set_fare_of_vehicles"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "header": [
+                            {
+                                "key": "admin_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiYWRtaW5fdHlwZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjk0NzU4NjU1fQ.rT1KBCsknSX9FKFS_6dok2Q2zDC09JVqp5R3jstjuuc"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"vehicle_type\":\"van\", \"discount\":\"11\", \"admin_commission\":\"22\", \"fare_per_km\":\"33\", \"min_fare\":\"44\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "update_fare_of_vehicles",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "localhost:7777/update_fare_of_vehicles",
+                            "path": [
+                                "update_fare_of_vehicles"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        },
+                        "header": [
+                            {
+                                "key": "admin_token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiYWRtaW5fdHlwZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNjk0NzU4NjU1fQ.rT1KBCsknSX9FKFS_6dok2Q2zDC09JVqp5R3jstjuuc"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\"id\":\"1\",\"vehicle_type\":\"bicycles\", \"discount\":\"11\", \"admin_commission\":\"null\", \"fare_per_km\":\"7\", \"min_fare\":\"20\"}"
+                        }
+                    }
+                },
+                {
+                    "name": "vehicle_fare_list",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "localhost:7777/vehicle_fare_list",
+                            "path": [
+                                "vehicle_fare_list"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "7777"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

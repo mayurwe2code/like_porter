@@ -514,11 +514,13 @@ export function chouse_driver_for_delivery(req, res) {
     let { order_id, delivery_lat, delivery_log, nearest_of_delivery_pin } = req.body
     let query_ = ""
     if (nearest_of_delivery_pin != "" && nearest_of_delivery_pin != undefined && nearest_of_delivery_pin != null) {
-        query_ += "SELECT *, ( 3959 * acos( cos( radians(" + delivery_lat + ") ) * cos( radians( driver_lat ) ) * cos( radians( driver_log ) - radians(" + delivery_log + ") ) + sin( radians(" + delivery_lat + ") ) * sin( radians( driver_lat ) ) ) ) AS distance FROM driver_working_area  LEFT JOIN delivery_man ON driver_working_area.driver_id = delivery_man.driver_id  HAVING distance < " + nearest_of_delivery_pin + " "
+        query_ += "SELECT *, ( 3959 * acos( cos( radians(" + delivery_lat + ") ) * cos( radians( driver_lat ) ) * cos( radians( driver_log ) - radians(" + delivery_log + ") ) + sin( radians(" + delivery_lat + ") ) * sin( radians( driver_lat ) ) ) ) AS distance FROM driver_working_area  LEFT JOIN delivery_man ON driver_working_area.driver_id = delivery_man.driver_id AND vehicle_detaile.is_active = '1' AND delivery_man.is_active = '1' HAVING distance < " + nearest_of_delivery_pin + " "
     } else {
         //if you want only show this driver , when selected working area
         // query_ += "SELECT * FROM driver_working_area  LEFT JOIN delivery_man ON driver_working_area.driver_id = delivery_man.driver_id "
-        query_ += "SELECT delivery_man.*,vehicle_detaile.model FROM delivery_man,vehicle_detaile where delivery_man.driver_id = vehicle_detaile.driver_id GROUP BY delivery_man.driver_id "
+        // query_ += "SELECT delivery_man.*,vehicle_detaile.model FROM delivery_man,vehicle_detaile where delivery_man.driver_id = vehicle_detaile.driver_id GROUP BY delivery_man.driver_id "
+        query_ += "SELECT delivery_man.*,vehicle_detaile.model, vehicle_detaile.is_active AS vehicle_is_active FROM delivery_man,vehicle_detaile where delivery_man.driver_id = vehicle_detaile.driver_id AND vehicle_detaile.is_active = '1' AND delivery_man.is_active = '1' GROUP BY delivery_man.driver_id;"
+        
     }
     console.log(query_)
     connection.query(query_, (err, rows) => {
